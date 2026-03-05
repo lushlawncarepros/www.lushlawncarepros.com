@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+@theme {
+  --color-lush-emerald: #39B54A;
+  --color-lush-charcoal: #111111;
+  --color-lush-slate: #36454F;
+  --color-lush-dark-green: #1E8D24;
+  --color-lush-dark-charcoal: #2A363E;
+
+  --font-sans: var(--font-inter);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #36454F;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #2A363E;
+    --foreground: #ffffff;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+}
+
+/* ── Botpress Webchat — Visibility Force + Gatekeeper ────────────────────
+   The #bp-webchat-container is injected by Botpress after init().
+   Force it visible so no stale rule or class can hide it post-load.
+   The gatekeeper rule only hides it while our lead form modal is open. */
+
+/* FORCE VISIBLE at all times by default */
+#bp-webchat-container {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  z-index: 9999 !important;
+}
+
+/* Hide ONLY when the lead-form gatekeeper modal is open */
+body.gatekeeper-open #bp-webchat-container {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+
+/* ── Google Places Autocomplete — Lush Dark Theme ───────────────────────────
+   The .pac-container is injected directly into <body> by the Maps JS SDK,
+   so it must be styled from global CSS (component-scoped styles can't reach it).
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Main dropdown container */
+.pac-container {
+  background-color: #111111;
+  border: 1px solid rgba(57, 181, 74, 0.3);
+  border-radius: 0.75rem;
+  /* 12px — matches the form's rounded-2xl */
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+  font-family: var(--font-sans), sans-serif;
+  margin-top: 4px;
+  overflow: hidden;
+  z-index: 9999 !important;
+  /* Stay above modal/form layers */
+}
+
+/* Remove the Google branding bar at the bottom */
+.pac-container::after {
+  display: none !important;
+}
+
+/* Individual suggestion row */
+.pac-item {
+  padding: 12px 16px;
+  color: #9CA3AF;
+  /* gray-400 */
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  line-height: 1.4;
+}
+
+.pac-item:first-child {
+  border-top: none;
+}
+
+/* Hover / keyboard-selected state */
+.pac-item:hover,
+.pac-item.pac-item-selected {
+  background-color: rgba(57, 181, 74, 0.1);
+  color: #ffffff;
+}
+
+/* The primary address text (street name portion) */
+.pac-item-query {
+  color: #ffffff;
+  font-size: 0.875rem;
+  /* 14px */
+  font-weight: 500;
+}
+
+/* Characters that match what the user typed — highlight in Lush Emerald */
+.pac-matched {
+  color: #39B54A;
+  font-weight: 600;
+}
+
+/* Hide / neutralise the default purple Google pin icon */
+.pac-icon {
+  display: none;
+}
+
+/* ── LUSH 2026: ABSOLUTE VISIBILITY OVERRIDE ─────────────────────────────
+   Must be at the bottom of this file to guarantee it wins the cascade.
+   Forces the Botpress container and its iframe to be visible and clickable
+   regardless of any internal Botpress state or stale class remnants. */
+#bp-webchat-container,
+#bp-webchat-container iframe,
+.bpw-layout {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  z-index: 9999 !important;
+}
+
+/* Hides ONLY when the Lead Sieve (Gatekeeper) modal is active */
+body.modal-open #bp-webchat-container,
+body.gatekeeper-open #bp-webchat-container {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

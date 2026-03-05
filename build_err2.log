@@ -1,0 +1,22 @@
+
+> tmp-app@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.9s
+  Running TypeScript ...
+Failed to compile.
+
+./src/lib/firebase.ts:8:16
+Type error: Cannot find name '__firebase_config'.
+
+[0m [90m  6 |[39m [90m// Guaranteed configuration retrieval[39m
+ [90m  7 |[39m [36mconst[39m getSystemConfig [33m=[39m () [33m=>[39m {
+[31m[1m>[22m[39m[90m  8 |[39m     [36mif[39m ([36mtypeof[39m __firebase_config [33m!==[39m [32m'undefined'[39m [33m&&[39m __firebase_config) {
+ [90m    |[39m                [31m[1m^[22m[39m
+ [90m  9 |[39m         [36mreturn[39m [33mJSON[39m[33m.[39mparse(__firebase_config)[33m;[39m
+ [90m 10 |[39m     }
+ [90m 11 |[39m     [90m// Return empty strings as fallback to prevent the 'null' app error[39m[0m
+Next.js build worker exited with code: 1 and signal: null

@@ -64,9 +64,9 @@ export function Footer() {
                                 <div className="text-white font-bold text-sm tracking-wide">
                                     Lush Lawn Care Pros
                                 </div>
-                                <a href="tel:2082601606" className="flex items-center gap-3 text-gray-400 hover:text-[#39B54A] transition-colors text-sm font-semibold group">
+                                <a href="tel:2089063220" className="flex items-center gap-3 text-gray-400 hover:text-[#39B54A] transition-colors text-sm font-semibold group">
                                     <Phone className="w-4 h-4 text-[#39B54A] group-hover:scale-110 transition-transform" />
-                                    (208) 260-1606
+                                    (208) 906-3220
                                 </a>
                                 <a href="mailto:lushlawncarepros@gmail.com" className="flex items-center gap-3 text-gray-400 hover:text-[#39B54A] transition-colors text-sm font-semibold group">
                                     <Mail className="w-4 h-4 text-[#39B54A] group-hover:scale-110 transition-transform" />

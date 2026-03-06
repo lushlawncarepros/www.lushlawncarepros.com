@@ -69,8 +69,11 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
             setStep(1);
             // Remove the query parameter from the URL so it doesn't trigger again on a fresh reload
             router.replace(pathname || '/', { scroll: false });
+        } else if (skipSieve && searchParams?.get('form') === 'services') {
+            setStep(4);
+            router.replace(pathname || '/', { scroll: false });
         }
-    }, [searchParams, isPrimary, pathname, router]);
+    }, [searchParams, isPrimary, pathname, router, skipSieve]);
 
     useEffect(() => {
         if (!pathname) return;

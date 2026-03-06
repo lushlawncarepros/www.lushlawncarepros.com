@@ -13,8 +13,30 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.lushlawncarepros.com"),
-  title: "Lush Lawn Care Pros – Premium Lawn Care in Boise & Meridian",
-  description: "Premium lawn care services in Boise and Meridian, Idaho. Expert mowing, fertilization, aeration, and more.",
+  title: "Boise Lawn Care & Yard Maintenance | Lush Lawn Care Pros",
+  description: "Lush Lawn Care Pros delivers premier lawn maintenance and landscaping services across the Boise area. Get a pristine yard today. Call 208-906-3220 for a free quote.",
+  openGraph: {
+    title: "Boise Lawn Care & Yard Maintenance | Lush Lawn Care Pros",
+    description: "Lush Lawn Care Pros delivers premier lawn maintenance and landscaping services across the Boise area. Get a pristine yard today. Call 208-906-3220 for a free quote.",
+    url: "https://www.lushlawncarepros.com",
+    siteName: "Lush Lawn Care Pros",
+    images: [
+      {
+        url: "/lush-logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Lush Lawn Care Pros",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Boise Lawn Care & Yard Maintenance | Lush Lawn Care Pros",
+    description: "Lush Lawn Care Pros delivers premier lawn maintenance and landscaping services across the Boise area. Get a pristine yard today. Call 208-906-3220 for a free quote.",
+    images: ["/lush-logo.png"],
+  },
   manifest: "/manifest.json",
   other: {
     "geo.region": "US-ID",

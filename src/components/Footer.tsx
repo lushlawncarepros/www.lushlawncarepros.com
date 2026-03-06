@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Phone, Mail, MapPin } from 'lucide-react';
 
 export function Footer() {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +19,7 @@ export function Footer() {
                         : 'max-h-0 opacity-0 mb-0 border-b-0 border-transparent pb-0'
                         }`}
                 >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                         {/* Column 1: Quick Links */}
                         <div className="flex flex-col items-center md:items-start text-center md:text-left">
                             <h4 className="text-white font-bold mb-6 uppercase tracking-widest text-sm flex items-center gap-2">
@@ -52,6 +52,31 @@ export function Footer() {
                             >
                                 View Google Profile
                             </a>
+                        </div>
+
+                        {/* Column 3: Contact Info */}
+                        <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                            <h4 className="text-white font-bold mb-6 uppercase tracking-widest text-sm flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-[#39B54A] inline-block"></span>
+                                Contact Info
+                            </h4>
+                            <div className="flex flex-col gap-4">
+                                <div className="text-white font-bold text-sm tracking-wide">
+                                    Lush Lawn Care Pros
+                                </div>
+                                <a href="tel:2082601606" className="flex items-center gap-3 text-gray-400 hover:text-[#39B54A] transition-colors text-sm font-semibold group">
+                                    <Phone className="w-4 h-4 text-[#39B54A] group-hover:scale-110 transition-transform" />
+                                    (208) 260-1606
+                                </a>
+                                <a href="mailto:lushlawncarepros@gmail.com" className="flex items-center gap-3 text-gray-400 hover:text-[#39B54A] transition-colors text-sm font-semibold group">
+                                    <Mail className="w-4 h-4 text-[#39B54A] group-hover:scale-110 transition-transform" />
+                                    lushlawncarepros@gmail.com
+                                </a>
+                                <div className="flex items-start gap-3 text-gray-400 text-sm font-semibold leading-relaxed">
+                                    <MapPin className="w-4 h-4 text-[#39B54A] mt-0.5" />
+                                    <span>Boise, ID 83709</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

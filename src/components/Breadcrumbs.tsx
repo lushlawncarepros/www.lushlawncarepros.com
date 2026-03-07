@@ -49,29 +49,10 @@ const Breadcrumbs: React.FC = () => {
     };
 
     return (
-        <div className="bg-slate-50 border-b border-slate-200">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-                <nav className="flex items-center space-x-2 text-sm text-slate-500 font-medium" aria-label="Breadcrumb">
-                    {breadcrumbItems.map((item, index) => (
-                        <React.Fragment key={item.item}>
-                            {index > 0 && <span className="text-slate-300">/</span>}
-                            <Link
-                                href={item.item}
-                                className={`hover:text-[#39B54A] transition-colors duration-200 ${index === breadcrumbItems.length - 1 ? 'text-slate-900 pointer-events-none' : ''
-                                    }`}
-                                aria-current={index === breadcrumbItems.length - 1 ? 'page' : undefined}
-                            >
-                                {item.name}
-                            </Link>
-                        </React.Fragment>
-                    ))}
-                </nav>
-            </div>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
-        </div>
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
     );
 };
 

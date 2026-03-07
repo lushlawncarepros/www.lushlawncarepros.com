@@ -7,16 +7,19 @@ import React from 'react';
 const LocalBusinessSchema: React.FC = () => {
     const schema = {
         '@context': 'https://schema.org',
-        '@type': 'LawnService',
+        '@type': 'LocalBusiness',
         name: 'Lush Lawn Care Pros',
         url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lushlawncarepros.com',
-        logo: 'https://www.lushlawncarepros.com/logo.png',
-        image: 'https://www.lushlawncarepros.com/hero.jpg',
+        logo: 'https://www.lushlawncarepros.com/lush-logo.png',
+        image: 'https://www.lushlawncarepros.com/lush-logo.png',
         description: 'Premium lawn care services in Boise and Meridian, Idaho.',
+        telephone: '(208) 906-3220',
+        priceRange: '$$',
         address: {
             '@type': 'PostalAddress',
             addressLocality: 'Boise',
             addressRegion: 'ID',
+            postalCode: '83709',
             addressCountry: 'US',
         },
         serviceArea: [

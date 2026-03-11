@@ -65,9 +65,11 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
     const router = useRouter();
 
     useEffect(() => {
-        if (isPrimary && searchParams?.get('quote') === 'true') {
+        const isQuoteHash = typeof window !== 'undefined' && window.location.hash === '#quote';
+
+        if (isPrimary && (searchParams?.get('quote') === 'true' || isQuoteHash)) {
             setStep(1);
-            // Remove the query parameter from the URL so it doesn't trigger again on a fresh reload
+            // Remove the query parameter or hash from the URL so it doesn't trigger again on a fresh reload
             router.replace(pathname || '/', { scroll: false });
         } else if (skipSieve && searchParams?.get('form') === 'services') {
             setStep(4);

@@ -37,7 +37,7 @@ export default function App() {
 
 
         {/* HERO SECTION */}
-        <section className="relative pt-2 pb-16 px-4 text-center max-w-5xl mx-auto flex flex-col items-center">
+        <section id="quote" className="relative pt-2 pb-16 px-4 text-center max-w-5xl mx-auto flex flex-col items-center">
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
             The Boise & Meridian lawn service <span className="text-[#39B54A]">you can set your watch by.</span>
           </h1>

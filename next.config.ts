@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
       { source: '/lush-lawn-care-pros/careers', destination: '/', permanent: true },
       { source: '/home/bush-trimming-boise-id', destination: '/services/shrub-care', permanent: true },
       { source: '/lush-lawn-care-pros/bush-trimming-boise-id', destination: '/services/shrub-care', permanent: true },
+      { source: '/lawn-service-boise', destination: '/services/mowing', permanent: true },
     ];
   }
 };

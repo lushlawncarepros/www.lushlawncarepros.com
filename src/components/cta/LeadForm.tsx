@@ -102,6 +102,21 @@ export const LeadForm: React.FC<LeadFormProps> = ({
                 removeFile={removeFile}
             />
 
+            {!isWaitlist && (
+                <div className="flex items-start gap-3 bg-white/5 p-3 rounded-xl border border-white/10 mt-2">
+                    <input 
+                        type="checkbox" 
+                        name="smsOptIn" 
+                        id="smsOptIn" 
+                        required 
+                        className="mt-1 min-w-[1.25rem] w-5 h-5 rounded border-gray-400 text-[#39B54A] focus:ring-[#39B54A] cursor-pointer"
+                    />
+                    <label htmlFor="smsOptIn" className="text-xs text-gray-300 leading-tight cursor-pointer">
+                        I agree to receive text messages from Lush Lawn Care Pros regarding my quote, service updates, and account information. Reply STOP to cancel. Message/data rates apply.
+                    </label>
+                </div>
+            )}
+
             <div className="flex flex-col gap-2 mt-4">
                 {loading && files.length > 0 && uploadProgress > 0 && (
                     <div className="flex flex-col gap-1 w-full my-2">

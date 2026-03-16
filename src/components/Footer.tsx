@@ -97,10 +97,14 @@ export function Footer() {
                     </div>
 
                     {/* Center: Copyright */}
-                    <div className="flex-1 text-center px-4">
+                    <div className="flex-1 text-center px-4 flex flex-col sm:flex-row justify-center items-center gap-2">
                         <p className="text-[10px] sm:text-xs text-gray-500 font-medium">
                             &copy; {(new Date()).getFullYear()} Lush Lawn Care Pros.
                         </p>
+                        <span className="hidden sm:inline text-gray-700">|</span>
+                        <Link href="/privacy" className="text-[10px] sm:text-xs text-gray-500 hover:text-[#39B54A] font-medium transition-colors">
+                            Privacy Policy
+                        </Link>
                     </div>
 
                     {/* Right: Hamburger */}

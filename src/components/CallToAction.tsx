@@ -289,6 +289,7 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
         const addressForGeocode = `${rawAddress}, ${trimmedCity}, ${trimmedZip}`;
 
         if (lat !== null && lng !== null && placeSelectedRef.current) {
+            setStreet(rawAddress);
             routeByCoords(lat, lng);
             return;
         }
@@ -331,6 +332,7 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
                                     const gLng = place.geometry.location.lng();
                                     setLat(gLat);
                                     setLng(gLng);
+                                    setStreet(rawAddress);
                                     routeByCoords(gLat, gLng);
                                 } else {
                                     setError('Address not recognized. Please select a valid street address from the suggestions.');

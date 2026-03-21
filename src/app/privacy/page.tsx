@@ -24,11 +24,11 @@ export default function PrivacyPolicy() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4 border-b border-white/10 pb-2">Text Messaging (SMS) Compliance</h2>
-          <div className="font-semibold text-[#39B54A] bg-[#39B54A]/10 p-5 rounded-xl border border-[#39B54A]/30 shadow-[0_0_15px_rgba(57,181,74,0.1)] mb-4">
-            No mobile information will be shared with third parties/affiliates for marketing/promotional purposes. All the above categories exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties.
+          <h2 className="text-2xl font-bold text-white mt-8 mb-4 border-b border-white/10 pb-2 uppercase tracking-tight">SMS & Mobile Data Policy</h2>
+          <div className="font-semibold text-[#39B54A] bg-[#39B54A]/10 p-6 rounded-2xl border border-[#39B54A]/30 shadow-[0_0_30px_rgba(57,181,74,0.1)] mb-4 leading-relaxed">
+            No mobile information will be shared with third parties or affiliates for marketing or promotional purposes. All personal data categories exclude text messaging originator opt-in data and consent; this opt-in information will strictly not be shared with any third parties.
           </div>
-          <p>
+          <p className="text-sm italic text-gray-400">
             By checking the &quot;I agree to receive text messages&quot; box on our forms, you consent to receive SMS communications from Lush Lawn Care Pros regarding your quote, service updates, and account information. You can opt-out at any time by replying STOP to any of our text messages.
           </p>
         </section>

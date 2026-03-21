@@ -105,6 +105,10 @@ export function Footer() {
                         <Link href="/privacy" className="text-[10px] sm:text-xs text-gray-500 hover:text-[#39B54A] font-medium transition-colors">
                             Privacy Policy
                         </Link>
+                        <span className="hidden sm:inline text-gray-700">|</span>
+                        <Link href="/terms" className="text-[10px] sm:text-xs text-gray-500 hover:text-[#39B54A] font-medium transition-colors">
+                            Terms of Service
+                        </Link>
                     </div>
 
                     {/* Right: Hamburger */}

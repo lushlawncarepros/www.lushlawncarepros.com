@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { ServiceMenu } from './ServiceMenu';
 import { VisualAudit } from './VisualAudit';
 
@@ -75,9 +76,14 @@ export const LeadForm: React.FC<LeadFormProps> = ({
             )}
 
             {!isWaitlist && (
-                <select name="source" className="appearance-none cursor-pointer bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2339B54A%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_1rem_center] bg-[length:1.2em_1.2em] pr-12 transition-all bg-white/5 border border-white/10 focus:border-lush-emerald focus:ring-1 focus:ring-lush-emerald/50 text-white font-medium text-lg px-4 py-3 rounded-xl w-full outline-none [&>option]:bg-lush-charcoal [&>option]:text-white">
-                    <option>How did you hear about us?</option>
-                    <option>Search Engine</option>
+                <select 
+                    name="source" 
+                    defaultValue=""
+                    className="appearance-none cursor-pointer bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2339B54A%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_1rem_center] bg-[length:1.2em_1.2em] pr-12 transition-all bg-white/5 border border-white/10 focus:border-lush-emerald focus:ring-1 focus:ring-lush-emerald/50 text-white font-medium text-lg px-4 py-3 rounded-xl w-full outline-none [&>option]:bg-lush-charcoal [&>option]:text-white" 
+                    required
+                >
+                    <option value="" disabled hidden>How did you hear about us?</option>
+                    <option value="Search Engine">Search Engine</option>
                     <option>Referral</option>
                     <option>Truck/Trailer</option>
                     <option>Flyer</option>
@@ -112,7 +118,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({
                         className="mt-1 min-w-[1.25rem] w-5 h-5 rounded border-gray-400 text-[#39B54A] focus:ring-[#39B54A] cursor-pointer"
                     />
                     <label htmlFor="smsOptIn" className="text-xs text-gray-300 leading-tight cursor-pointer">
-                        I agree to receive text messages from Lush Lawn Care Pros regarding my quote, service updates, and account information. Reply STOP to cancel. Message/data rates apply.
+                        I agree to receive text messages from Lush Lawn Care Pros. I can reply STOP to opt-out at any time. Message and data rates may apply. View our <Link href="/privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-lush-emerald">Privacy Policy</Link> and <Link href="/terms" target="_blank" rel="noopener noreferrer" className="underline hover:text-lush-emerald">Terms of Service</Link>.
                     </label>
                 </div>
             )}

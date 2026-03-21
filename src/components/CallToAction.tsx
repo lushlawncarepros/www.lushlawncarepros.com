@@ -537,6 +537,7 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
             const templateParams = {
                 firstName: (data.firstName as string) || '',
                 lastName: (data.lastName as string) || '',
+                email: (data.email as string) || '',
                 dynamicEmailContent: dynamicEmailContent || '<p>No specific details provided.</p>',
                 emailPhotoLinks: emailPhotoLinks || '<p style="color:#999;font-size:12px;">No visual audit files attached.</p>'
             };

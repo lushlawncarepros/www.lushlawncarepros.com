@@ -41,10 +41,15 @@ export default function SeasonalHub() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl mb-16 animate-in fade-in slide-in-from-bottom-6 duration-500">
                         {/* Aeration Tile */}
                         <Link href="/services/aeration" className="bg-gray-800/50 border border-gray-700 hover:border-[#39B54A]/50 p-8 rounded-2xl transition-all hover:scale-[1.02] text-center flex flex-col items-center gap-4 group cursor-pointer shadow-lg hover:shadow-[0_0_20px_rgba(57,181,74,0.15)] relative overflow-hidden">
-                            <span className="w-20 h-20 rounded-full bg-emerald-500/10 flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors z-10">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-[#39B54A]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                                </svg>
+                            <span className="w-24 h-24 rounded-full bg-emerald-500/10 flex items-center justify-center group-hover:bg-emerald-500/20 transition-all z-10 overflow-hidden">
+                                <Image 
+                                    src="/icons/Core Aeration.png" 
+                                    alt="Core Aeration" 
+                                    width={96} 
+                                    height={96} 
+                                    className="object-contain w-full h-full"
+                                    unoptimized
+                                />
                             </span>
                             <div className="z-10">
                                 <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-[#39B54A] transition-colors">Core Aeration</h2>
@@ -54,26 +59,36 @@ export default function SeasonalHub() {
 
                         {/* Blowout Tile */}
                         <Link href="/services/sprinkler-blowout" className="bg-gray-800/50 border border-gray-700 hover:border-[#39B54A]/50 p-8 rounded-2xl transition-all hover:scale-[1.02] text-center flex flex-col items-center gap-4 group cursor-pointer shadow-lg hover:shadow-[0_0_20px_rgba(57,181,74,0.15)] relative overflow-hidden">
-                            <span className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors z-10">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                </svg>
+                            <span className="w-24 h-24 rounded-full bg-emerald-500/10 flex items-center justify-center group-hover:bg-emerald-500/20 transition-all z-10 overflow-hidden">
+                                <Image 
+                                    src="/icons/Seasonal Sprinkler Icon.png" 
+                                    alt="Sprinkler Blowouts" 
+                                    width={96} 
+                                    height={96} 
+                                    className="object-contain w-full h-full"
+                                    unoptimized
+                                />
                             </span>
                             <div className="z-10">
-                                <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-500 transition-colors">Sprinkler Blowouts</h2>
+                                <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-[#39B54A] transition-colors">Sprinkler Blowouts</h2>
                                 <p className="text-gray-400 text-sm leading-relaxed">Protect your high-value irrigation infrastructure from catastrophic winter freeze damage with high-CFM compressor volume.</p>
                             </div>
                         </Link>
 
                         {/* Shrub Care Tile */}
                         <Link href="/services/shrub-care" className="bg-gray-800/50 border border-gray-700 hover:border-[#39B54A]/50 p-8 rounded-2xl transition-all hover:scale-[1.02] text-center flex flex-col items-center gap-4 group cursor-pointer shadow-lg hover:shadow-[0_0_20px_rgba(57,181,74,0.15)] relative overflow-hidden">
-                            <span className="w-20 h-20 rounded-full bg-orange-500/10 flex items-center justify-center group-hover:bg-orange-500/20 transition-colors z-10">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.121 15.536c-1.171 1.952-3.07 1.952-4.242 0-1.172-1.953-1.172-5.119 0-7.072 1.171-1.952 3.07-1.952 4.242 0M8 10.5h4m-4 3h4m9-1.5a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
+                            <span className="w-24 h-24 rounded-full bg-emerald-500/10 flex items-center justify-center group-hover:bg-emerald-500/20 transition-all z-10 overflow-hidden">
+                                <Image 
+                                    src="/icons/Hand Pruners.png" 
+                                    alt="Shrub Pruning" 
+                                    width={96} 
+                                    height={96} 
+                                    className="object-contain w-full h-full"
+                                    unoptimized
+                                />
                             </span>
                             <div className="z-10">
-                                <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-orange-500 transition-colors">Shrub Pruning</h2>
+                                <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-[#39B54A] transition-colors">Shrub Pruning</h2>
                                 <p className="text-gray-400 text-sm leading-relaxed">Species-specific trimming and structural pruning for optimal ornamental health throughout the growing season.</p>
                             </div>
                         </Link>

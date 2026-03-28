@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { collection, query, where, getDocs, Timestamp, deleteDoc, doc } from 'firebase/firestore';
-import { getLushDb, appId } from '@/lib/firebase';
+import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { signInWithEmailAndPassword, onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { getLushDb, getLushAuth, appId } from '@/lib/firebase';
 
 interface Lead {
     id: string;
@@ -19,10 +20,14 @@ interface Lead {
 }
 
 export default function WaitlistDashboard() {
-    const [pin, setPin] = useState('');
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [pinError, setPinError] = useState('');
+    // Auth State
+    const [user, setUser] = useState<User | null>(null);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [authError, setAuthError] = useState('');
+    const [isAuthenticating, setIsAuthenticating] = useState(true); // Start true to check session
 
+    // Data State
     const [leads, setLeads] = useState<Lead[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -31,21 +36,67 @@ export default function WaitlistDashboard() {
     const [leadToDelete, setLeadToDelete] = useState<Lead | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
 
+    // Sorting State
     const [sortField, setSortField] = useState<keyof Lead>('createdAt');
     const [sortAsc, setSortAsc] = useState(false);
 
-    const handlePinSubmit = (e: React.FormEvent) => {
+    const TARGET_EMAIL = 'lushlawncarepros@gmail.com';
+
+    useEffect(() => {
+        const auth = getLushAuth();
+        if (!auth) {
+            setIsAuthenticating(false);
+            return;
+        }
+
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            if (currentUser && currentUser.email !== TARGET_EMAIL) {
+                await signOut(auth);
+                setUser(null);
+                setAuthError('Access Denied: Unauthorized Email');
+            } else {
+                setUser(currentUser);
+            }
+            setIsAuthenticating(false);
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (pin === '3842') {
-            setIsAuthenticated(true);
-            setPinError('');
-        } else {
-            setPinError('Incorrect PIN');
+        setAuthError('');
+        const auth = getLushAuth();
+        if (!auth) {
+            setAuthError("Auth system not initialized.");
+            return;
+        }
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            if (userCredential.user.email !== TARGET_EMAIL) {
+                await signOut(auth);
+                setAuthError("Access Denied: Unauthorized Email");
+            }
+        } catch (err: any) {
+            console.error("Login failed:", err);
+            setAuthError("Failed to sign in. Please check your credentials.");
+        }
+    };
+
+    const handleLogout = async () => {
+        const auth = getLushAuth();
+        if (auth) {
+            try {
+                await signOut(auth);
+            } catch (err) {
+                console.error("Logout failed:", err);
+            }
         }
     };
 
     useEffect(() => {
-        if (!isAuthenticated) return;
+        if (!user) return;
 
         const fetchLeads = async () => {
             setLoading(true);
@@ -96,14 +147,14 @@ export default function WaitlistDashboard() {
                 setLeads(fetchedLeads);
             } catch (err: any) {
                 console.error("Error fetching leads:", err);
-                setError("Failed to load waitlist data. Check connection.");
+                setError(`Failed to load waitlist data. Check connection or lack of permissions (${err.message}).`);
             } finally {
                 setLoading(false);
             }
         };
 
         fetchLeads();
-    }, [isAuthenticated]);
+    }, [user]);
 
     const handleSort = (field: keyof Lead) => {
         const isAsc = sortField === field ? !sortAsc : true;
@@ -179,26 +230,54 @@ export default function WaitlistDashboard() {
         }
     };
 
-    if (!isAuthenticated) {
+    if (isAuthenticating) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh]">
-                <div className="bg-gray-900 border border-gray-800 p-8 rounded-2xl shadow-xl max-w-sm w-full text-center">
-                    <h1 className="text-2xl font-bold text-white mb-6">Restricted Area</h1>
-                    <form onSubmit={handlePinSubmit} className="flex flex-col gap-4">
-                        <input
-                            type="password"
-                            value={pin}
-                            onChange={(e) => setPin(e.target.value)}
-                            placeholder="Enter PIN"
-                            className="px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white text-center text-lg tracking-[0.5em] focus:outline-none focus:border-lush-emerald"
-                            autoFocus
-                        />
-                        {pinError && <p className="text-red-500 text-sm">{pinError}</p>}
+                <p className="text-gray-400">Verifying session...</p>
+            </div>
+        );
+    }
+
+    if (!user) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh] py-8 px-4">
+                <div className="bg-gray-900 border border-gray-800 p-8 rounded-2xl shadow-xl max-w-md w-full">
+                    <h1 className="text-2xl font-bold text-white mb-2 text-center">Admin Portal</h1>
+                    <p className="text-gray-400 text-center mb-6 text-sm">Please sign in to access the waitlist data.</p>
+                    
+                    <form onSubmit={handleLogin} className="flex flex-col gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-300 mb-1" htmlFor="email">Email Address</label>
+                            <input
+                                id="email"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="admin@lushlawncarepros.com"
+                                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-lush-emerald focus:ring-1 focus:ring-lush-emerald transition-colors"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-300 mb-1" htmlFor="password">Password</label>
+                            <input
+                                id="password"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="••••••••"
+                                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-lush-emerald focus:ring-1 focus:ring-lush-emerald transition-colors"
+                                required
+                            />
+                        </div>
+                        
+                        {authError && <div className="text-red-500 text-sm bg-red-500/10 p-3 rounded-lg border border-red-500/20">{authError}</div>}
+                        
                         <button
                             type="submit"
                             className="mt-2 bg-lush-emerald text-lush-slate font-bold py-3 rounded-lg hover:bg-[#32a042] transition-colors"
                         >
-                            Access Dashboard
+                            Sign In
                         </button>
                     </form>
                 </div>
@@ -213,14 +292,23 @@ export default function WaitlistDashboard() {
                     <h1 className="text-3xl font-extrabold text-white">Waitlist Dashboard</h1>
                     <p className="text-gray-400 mt-1">Found {leads.length} out-of-bounds leads currently waiting for service expansion.</p>
                 </div>
-                <button
-                    type="button"
-                    onClick={downloadCSV}
-                    className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white border border-gray-600 px-6 py-2.5 rounded-lg font-medium transition-colors"
-                >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                    Export CSV
-                </button>
+                <div className="flex items-center gap-3">
+                    <button
+                        type="button"
+                        onClick={downloadCSV}
+                        className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white border border-gray-600 px-4 py-2 rounded-lg font-medium transition-colors text-sm"
+                    >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        Export CSV
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="flex items-center gap-2 bg-red-900/40 hover:bg-red-900/60 text-red-200 border border-red-800/50 px-4 py-2 rounded-lg font-medium transition-colors text-sm"
+                    >
+                        Sign Out
+                    </button>
+                </div>
             </div>
 
             {error && (
@@ -263,11 +351,11 @@ export default function WaitlistDashboard() {
                         <tbody>
                             {loading ? (
                                 <tr>
-                                    <td colSpan={7} className="px-6 py-8 text-center text-gray-400">Loading waitlist data...</td>
+                                    <td colSpan={8} className="px-6 py-8 text-center text-gray-400">Loading waitlist data...</td>
                                 </tr>
                             ) : leads.length === 0 ? (
                                 <tr>
-                                    <td colSpan={7} className="px-6 py-8 text-center text-gray-400">No waitlist entries found.</td>
+                                    <td colSpan={8} className="px-6 py-8 text-center text-gray-400">No waitlist entries found.</td>
                                 </tr>
                             ) : (
                                 leads.map((lead) => (

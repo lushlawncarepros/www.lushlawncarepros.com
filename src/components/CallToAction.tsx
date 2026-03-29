@@ -16,10 +16,10 @@ import { SieveStep } from './cta/SieveStep';
 import { LeadForm } from './cta/LeadForm';
 import { SuccessScreen } from './cta/SuccessScreen';
 
-const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideServices = false, buttonText = "Get Free Quote", variant = 'primary', skipSieve = false }: { redirectOnQuote?: boolean, isPrimary?: boolean, hideServices?: boolean, buttonText?: string, variant?: 'primary' | 'subtle', skipSieve?: boolean }) => {
+const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideServices = false, buttonText = "Get Free Quote", variant = 'primary', skipSieve = false, forceForm = false }: { redirectOnQuote?: boolean, isPrimary?: boolean, hideServices?: boolean, buttonText?: string, variant?: 'primary' | 'subtle', skipSieve?: boolean, forceForm?: boolean }) => {
     const [loading, setLoading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(forceForm ? 4 : 0);
     const [isWaitlist, setIsWaitlist] = useState(false);
 
     const [showAvailability, setShowAvailability] = useState(false);
@@ -67,7 +67,9 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
     useEffect(() => {
         const isQuoteHash = typeof window !== 'undefined' && window.location.hash === '#quote';
 
-        if (isPrimary && (searchParams?.get('quote') === 'true' || isQuoteHash)) {
+        if (forceForm) {
+            setStep(4);
+        } else if (isPrimary && (searchParams?.get('quote') === 'true' || isQuoteHash)) {
             setStep(1);
             // Remove the query parameter or hash from the URL so it doesn't trigger again on a fresh reload
             router.replace(pathname || '/', { scroll: false });
@@ -75,7 +77,7 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
             setStep(4);
             router.replace(pathname || '/', { scroll: false });
         }
-    }, [searchParams, isPrimary, pathname, router, skipSieve]);
+    }, [searchParams, isPrimary, pathname, router, skipSieve, forceForm]);
 
     useEffect(() => {
         if (!pathname) return;
@@ -675,7 +677,7 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
     );
 };
 
-export const CallToAction = (props: { redirectOnQuote?: boolean, isPrimary?: boolean, hideServices?: boolean, buttonText?: string, variant?: 'primary' | 'subtle', skipSieve?: boolean }) => {
+export const CallToAction = (props: { redirectOnQuote?: boolean, isPrimary?: boolean, hideServices?: boolean, buttonText?: string, variant?: 'primary' | 'subtle', skipSieve?: boolean, forceForm?: boolean }) => {
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <CallToActionContent {...props} />

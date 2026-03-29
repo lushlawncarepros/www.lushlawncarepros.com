@@ -114,7 +114,6 @@ export const LeadForm: React.FC<LeadFormProps> = ({
                         type="checkbox" 
                         name="smsOptIn" 
                         id="smsOptIn" 
-                        required 
                         className="mt-1 min-w-[1.25rem] w-5 h-5 rounded border-gray-400 text-[#39B54A] focus:ring-[#39B54A] cursor-pointer"
                     />
                     <label htmlFor="smsOptIn" className="text-xs text-gray-300 leading-tight cursor-pointer">

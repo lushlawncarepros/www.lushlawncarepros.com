@@ -16,7 +16,7 @@ import { SieveStep } from './cta/SieveStep';
 import { LeadForm } from './cta/LeadForm';
 import { SuccessScreen } from './cta/SuccessScreen';
 
-const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideServices = false, buttonText = "Get Free Quote", variant = 'primary', skipSieve = false, forceForm = false }: { redirectOnQuote?: boolean, isPrimary?: boolean, hideServices?: boolean, buttonText?: string, variant?: 'primary' | 'subtle', skipSieve?: boolean, forceForm?: boolean }) => {
+const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideServices = false, buttonText = "Get Free Quote", variant = 'primary', skipSieve = false, forceForm = false, sourceOverride }: { redirectOnQuote?: boolean, isPrimary?: boolean, hideServices?: boolean, buttonText?: string, variant?: 'primary' | 'subtle', skipSieve?: boolean, forceForm?: boolean, sourceOverride?: string }) => {
     const [loading, setLoading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [step, setStep] = useState(forceForm ? 4 : 0);
@@ -394,6 +394,14 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
             }
         }
 
+        // Address safety net — block submissions with empty address unless it's a tagged compliance submission
+        if (!sourceOverride) {
+            if (!street.trim() || !city.trim() || !zip.trim()) {
+                setError("Property address is required. Please provide your complete address to continue.");
+                return;
+            }
+        }
+
         const auth = getLushAuth();
         const storage = getLushStorage();
         const db = getLushDb();
@@ -490,7 +498,8 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
                 emailPhotoLinks: photoUrls.map((url, index) => `${index + 1}. ${url}`).join('\n'),
                 additionalServices: selectedServices,
                 createdAt: serverTimestamp(),
-                systemVersion: 'v18_fasttrack_compressed'
+                systemVersion: 'v18_fasttrack_compressed',
+                ...(sourceOverride ? { submissionSource: sourceOverride } : {})
             });
 
             setStep(5);
@@ -671,13 +680,17 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
                     additionalServicesList={additionalServicesList} handleFileChange={handleFileChange}
                     fileUrlsPreview={fileUrlsPreview} removeFile={removeFile} uploadProgress={uploadProgress}
                     files={files}
+                    showAddressFields={skipSieve}
+                    street={street} setStreet={setStreet}
+                    city={city} setCity={setCity}
+                    zip={zip} setZip={setZip}
                 />
             )}
         </div >
     );
 };
 
-export const CallToAction = (props: { redirectOnQuote?: boolean, isPrimary?: boolean, hideServices?: boolean, buttonText?: string, variant?: 'primary' | 'subtle', skipSieve?: boolean, forceForm?: boolean }) => {
+export const CallToAction = (props: { redirectOnQuote?: boolean, isPrimary?: boolean, hideServices?: boolean, buttonText?: string, variant?: 'primary' | 'subtle', skipSieve?: boolean, forceForm?: boolean, sourceOverride?: string }) => {
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <CallToActionContent {...props} />

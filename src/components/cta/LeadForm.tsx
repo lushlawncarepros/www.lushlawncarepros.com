@@ -23,13 +23,21 @@ interface LeadFormProps {
     removeFile: (fileToRemove: File) => void;
     uploadProgress: number;
     files: File[];
+    showAddressFields?: boolean;
+    street?: string;
+    setStreet?: (val: string) => void;
+    city?: string;
+    setCity?: (val: string) => void;
+    zip?: string;
+    setZip?: (val: string) => void;
 }
 
 export const LeadForm: React.FC<LeadFormProps> = ({
     isWaitlist, handleSubmit, loading, error, email, handleEmailChange, emailError,
     phone, handlePhoneChange, phoneError, setStep, selectedServices,
     toggleService, additionalServicesList, handleFileChange, fileUrlsPreview,
-    removeFile, uploadProgress, files
+    removeFile, uploadProgress, files,
+    showAddressFields, street, setStreet, city, setCity, zip, setZip
 }) => {
     return (
         <form onSubmit={handleSubmit} className="bg-lush-charcoal p-6 md:p-8 rounded-2xl flex flex-col gap-4 text-left max-w-md w-full border border-white/10 animate-in fade-in zoom-in shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
@@ -44,6 +52,37 @@ export const LeadForm: React.FC<LeadFormProps> = ({
                 <input name="firstName" placeholder="First Name" autoComplete="given-name" className="bg-white/5 border border-white/10 focus:border-lush-emerald text-white font-medium text-lg placeholder:text-gray-500 px-4 py-3 rounded-xl w-full outline-none" required />
                 <input name="lastName" placeholder="Last Name" autoComplete="family-name" className="bg-white/5 border border-white/10 focus:border-lush-emerald text-white font-medium text-lg placeholder:text-gray-500 px-4 py-3 rounded-xl w-full outline-none" required />
             </div>
+
+            {showAddressFields && (
+                <div className="flex flex-col gap-4">
+                    <input
+                        value={street || ''}
+                        onChange={e => setStreet?.(e.target.value)}
+                        placeholder="Property Address (e.g. 1234 W Main St)"
+                        autoComplete="street-address"
+                        className="bg-white/5 border border-white/10 focus:border-lush-emerald text-white font-medium text-lg placeholder:text-gray-500 px-4 py-3 rounded-xl w-full outline-none"
+                        required
+                    />
+                    <div className="grid grid-cols-2 gap-4">
+                        <input
+                            value={city || ''}
+                            onChange={e => setCity?.(e.target.value)}
+                            placeholder="City"
+                            autoComplete="address-level2"
+                            className="bg-white/5 border border-white/10 focus:border-lush-emerald text-white font-medium text-lg placeholder:text-gray-500 px-4 py-3 rounded-xl w-full outline-none"
+                            required
+                        />
+                        <input
+                            value={zip || ''}
+                            onChange={e => setZip?.(e.target.value)}
+                            placeholder="Zip Code"
+                            autoComplete="postal-code"
+                            className="bg-white/5 border border-white/10 focus:border-lush-emerald text-white font-medium text-lg placeholder:text-gray-500 px-4 py-3 rounded-xl w-full outline-none"
+                            required
+                        />
+                    </div>
+                </div>
+            )}
 
             <div className="flex flex-col gap-1">
                 <input

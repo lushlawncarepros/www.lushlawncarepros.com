@@ -41,6 +41,14 @@ export const LeadForm: React.FC<LeadFormProps> = ({
 }) => {
     return (
         <form onSubmit={handleSubmit} className="bg-lush-charcoal p-6 md:p-8 rounded-2xl flex flex-col gap-4 text-left max-w-md w-full border border-white/10 animate-in fade-in zoom-in shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            <input
+                type="text"
+                name="website_url"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ display: 'none' }}
+            />
             <h3 className="text-lush-emerald font-extrabold text-xl text-center mb-4">{isWaitlist ? "Join Priority Waitlist" : "Precision Quote Request"}</h3>
             {isWaitlist && (
                 <div className="bg-transparent border-2 border-white/20 p-5 rounded-xl text-center mb-4">

@@ -252,7 +252,7 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
     };
 
     const isInsideLushBox = (latVal: number, lngVal: number): boolean => {
-        return latVal < 43.661 && latVal > 43.550 && lngVal > -116.354 && lngVal < -116.201;
+        return latVal < 43.661 && latVal > 43.531888 && lngVal > -116.354 && lngVal < -116.201;
     };
 
     const routeByCoords = (latVal: number, lngVal: number) => {

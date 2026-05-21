@@ -522,7 +522,6 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
                 { label: 'Last Name', value: data.lastName as string | undefined },
                 { label: 'Email', value: data.email as string | undefined },
                 { label: 'Phone', value: data.phone as string | undefined },
-                { label: 'Form Route', value: formName },
                 { label: 'Source', value: data.source as string | undefined }
             ]);
 

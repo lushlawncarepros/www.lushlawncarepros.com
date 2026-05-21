@@ -515,7 +515,7 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
             };
 
             const formName = sourceOverride || 'Main Call to Action';
-            let dynamicEmailContent = `<h2 style="color: #39B54A; margin-top: 0; margin-bottom: 20px; font-size: 18px; text-transform: uppercase; border-bottom: 2px solid #39B54A; padding-bottom: 8px;">New Lead Details from ${formName}</h2>`;
+            let dynamicEmailContent = `<h3 style="color: #39B54A; margin-top: 0; margin-bottom: 20px; font-size: 16px; text-transform: uppercase; border-bottom: 2px solid #39B54A; padding-bottom: 8px;">FROM: ${formName}</h3>`;
 
             dynamicEmailContent += buildSection('IDENTITY', [
                 { label: 'First Name', value: data.firstName as string | undefined },

@@ -514,14 +514,15 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
                 return html;
             };
 
-            let dynamicEmailContent = '';
+            const formName = sourceOverride || 'Main Call to Action';
+            let dynamicEmailContent = `<h2 style="color: #39B54A; margin-top: 0; margin-bottom: 20px; font-size: 18px; text-transform: uppercase; border-bottom: 2px solid #39B54A; padding-bottom: 8px;">New Lead Details from ${formName}</h2>`;
 
             dynamicEmailContent += buildSection('IDENTITY', [
                 { label: 'First Name', value: data.firstName as string | undefined },
                 { label: 'Last Name', value: data.lastName as string | undefined },
                 { label: 'Email', value: data.email as string | undefined },
                 { label: 'Phone', value: data.phone as string | undefined },
-                { label: 'Form Route', value: sourceOverride || 'Main Call to Action' },
+                { label: 'Form Route', value: formName },
                 { label: 'Source', value: data.source as string | undefined }
             ]);
 
@@ -550,6 +551,8 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
                 firstName: (data.firstName as string) || '',
                 lastName: (data.lastName as string) || '',
                 email: (data.email as string) || '',
+                formName: formName,
+                subject: `New Lead Details from ${formName}: ${(data.firstName as string) || ''} ${(data.lastName as string) || ''}`,
                 dynamicEmailContent: dynamicEmailContent || '<p>No specific details provided.</p>',
                 emailPhotoLinks: emailPhotoLinks || '<p style="color:#999;font-size:12px;">No visual audit files attached.</p>'
             };

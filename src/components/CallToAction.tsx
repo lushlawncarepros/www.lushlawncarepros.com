@@ -521,7 +521,8 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
                 { label: 'Last Name', value: data.lastName as string | undefined },
                 { label: 'Email', value: data.email as string | undefined },
                 { label: 'Phone', value: data.phone as string | undefined },
-                { label: 'Source', value: data.source as string | undefined }
+                { label: 'Form Route', value: sourceOverride || 'Main Call to Action' },
+                { label: 'Heard About Us', value: data.source as string | undefined }
             ]);
 
             dynamicEmailContent += buildSection('PROPERTY', [

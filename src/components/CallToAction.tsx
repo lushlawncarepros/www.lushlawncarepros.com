@@ -511,6 +511,9 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
             // EmailJS send below: the Firestore write above is done,
             // the success screen is already showing, and a CRM outage
             // must never cost the lead or change what happens next.
+            // (The try/catch covers even synchronous failures, so the
+            // EmailJS send below ALWAYS still runs.)
+            try {
             fetch('/api/lead-intake', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -539,6 +542,9 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
             }).catch(intakeErr => {
                 console.error("LUSH_BACKGROUND_INTAKE_ERROR:", intakeErr);
             });
+            } catch (intakeErr) {
+                console.error("LUSH_BACKGROUND_INTAKE_ERROR:", intakeErr);
+            }
 
             const buildSection = (title: string, fields: { label: string, value: any }[]) => {
                 const validFields = fields.filter(f => f.value && typeof f.value === 'string' && f.value !== '' && f.value !== 'None' && f.value !== 'N/A' && f.value !== "I Don't Know");

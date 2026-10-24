@@ -504,6 +504,42 @@ const CallToActionContent = ({ redirectOnQuote = false, isPrimary = false, hideS
 
             setStep(5);
 
+            // Dual delivery (Batch #26): the same assembled submission
+            // also flows into the CRM through this site's server route
+            // (which holds the intake secret — never the browser).
+            // Fire-and-forget with its own catch, exactly like the
+            // EmailJS send below: the Firestore write above is done,
+            // the success screen is already showing, and a CRM outage
+            // must never cost the lead or change what happens next.
+            fetch('/api/lead-intake', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    firstName: (data.firstName as string) || '',
+                    lastName: (data.lastName as string) || '',
+                    email: (data.email as string) || '',
+                    phone: (data.phone as string) || '',
+                    source: (data.source as string) || '',
+                    comments: (data.comments as string) || '',
+                    street,
+                    city,
+                    zip,
+                    isWaitlist,
+                    additionalServices: selectedServices,
+                    photoUrls,
+                    sprinkler_estimate_type: (data.sprinkler_estimate_type as string) || '',
+                    sprinkler_water_source: (data.sprinkler_water_source as string) || '',
+                    sprinkler_zones: (data.sprinkler_zones as string) || '',
+                    sprinkler_spickets: (data.sprinkler_spickets as string) || '',
+                    sprinkler_backflow_location: (data.sprinkler_backflow_location as string) || '',
+                    sprinkler_valve_location: (data.sprinkler_valve_location as string) || '',
+                    sprinkler_yearly_schedule: (data.sprinkler_yearly_schedule as string) || '',
+                    sprinkler_comments: (data.sprinkler_comments as string) || '',
+                }),
+            }).catch(intakeErr => {
+                console.error("LUSH_BACKGROUND_INTAKE_ERROR:", intakeErr);
+            });
+
             const buildSection = (title: string, fields: { label: string, value: any }[]) => {
                 const validFields = fields.filter(f => f.value && typeof f.value === 'string' && f.value !== '' && f.value !== 'None' && f.value !== 'N/A' && f.value !== "I Don't Know");
                 if (validFields.length === 0) return '';
